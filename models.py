@@ -4,6 +4,7 @@ from django.db import models
 class Tag(models.Model):
 	name = models.CharField(max_length=20)
 	description = models.CharField(max_length=100)
+	is_title = models.BooleanField(default=False)
 	creation_time=models.DateTimeField(auto_now_add=True)
 	modification_time=models.DateTimeField(auto_now=True)	
 

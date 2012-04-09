@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>增加标签</title>
+		<meta charset="UTF-8"/>
+	</head>
+			
+	<body>
+		<div>
+			<form method="post" action="/accountbook/add_tag_do" id="add_tag">
+				{% csrf_token %}	
+				tag name:<input type="text" name="tag_name"/><br/>
+				<input type="radio" name="is_title" value='1'>is title</input>
+				<input type="radio" name="is_title" value='0' checked>is not title</input><br/>
+				description:<br/>
+				<textarea form="add_tag" rows="5" cols="40" name="tag_description"/></textarea>
+				<br/>
+				<input type="submit" value="save"/>
+			</form>
+		</div>
+	</body>
+</html>
