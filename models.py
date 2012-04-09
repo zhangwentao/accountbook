@@ -10,7 +10,7 @@ class Tag(models.Model):
 class Record(models.Model):
 	amount=models.FloatField()
 	detail=models.CharField(max_length=100)
-	occurrence_time=models.DataTime()
+	occurrence_time=models.DateTimeField()
 	creation_time=models.DateTimeField(auto_now_add=True)
 	modification_time=models.DateTimeField(auto_now=True)	
 
