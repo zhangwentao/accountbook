@@ -2,7 +2,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from models import Tag
+from models import Tag,Record,Record_tag_maping
+from datetime import datetime
 def add_tag_page(request):
 	return render_to_response('add_tag.html',{},context_instance=RequestContext(request))
 
@@ -24,4 +25,15 @@ def add_tag(request):
 def add_record(request):
 	var = request.POST
 	print var
+	date = var['occurrence_date'].split('/')
+	tags = var['tag']
+	new_record = Record()
+	new_record.amount = float(var['amount']) 	
+	new_record.occurrence_time = datetime(int(date[0]),int(date[1]),int(date[2]))
+	new_record.save()	
+	for tag_id in tags:
+		maping = Record_tag_maping()
+		maping.record_id = new_record.id
+		maping.tag_id = int(tag_id)
+		maping.save()
 	return HttpResponse('ok');
