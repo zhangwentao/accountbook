@@ -8,12 +8,31 @@
 			function handleSaveBtnClick()
 			{
 				var req = new XMLHttpRequest();
+				req.onreadystatechange = handleReqStateChanged;
 				req.open("post",url)
 				var data = new FormData();
 				var key = document.getElementsByName("csrfmiddlewaretoken")[0];
 				data.append("vars",collectVars());
 				data.append(key.name,key.value);
 				req.send(data);
+				
+				function handleReqStateChanged()
+				{
+					if(req.readyState == XMLHttpRequest.DONE)
+					{
+						showResult(req.responseText);
+					}
+				}
+				
+				function showResult(resultString)
+				{
+					switch(resultString)
+					{
+						case 'success':
+							alert("data is saved");
+						break;	
+					}	
+				}
 			}
 		
 		  	function collectVars()

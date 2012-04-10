@@ -38,4 +38,4 @@ def add_record(request):
 		maping.record_id = new_record.id
 		maping.tag_id = int(tag_id)
 		maping.save()
-	return HttpResponse('ok');
+	return HttpResponse('success');
