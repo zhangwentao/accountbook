@@ -3,6 +3,39 @@
 	<head>
 		<title>增加记录</title>
 		<meta charset="UTF-8"/>
+		<script type="text/javascript">
+			var url = "http://127.0.0.1:8000/accountbook/add_record_do";
+			function handleSaveBtnClick()
+			{
+				var req = new XMLHttpRequest();
+				req.open("post",url)
+				var data = new FormData();
+				var key = document.getElementsByName("csrfmiddlewaretoken")[0];
+				data.append("vars",collectVars());
+				data.append(key.name,key.value);
+				req.send(data);
+			}
+		
+		  	function collectVars()
+			{
+				var vars = {};
+				vars["occurrence_date"] = document.getElementsByName("occurrence_date")[0].value;
+				vars["amount"] = document.getElementsByName("amount")[0].value;
+				var tags = [];
+				tags.push(document.getElementsByTagName("select")[0].value);
+				var checkboxes = document.getElementsByName("tag");
+				for (var i = 0;i<checkboxes.length;i++)
+				{
+					var checkbox = checkboxes[i]
+					if(checkbox.checked == true)
+					{	
+						tags.push(checkbox.value);
+					}
+				}		
+				vars["tag"] = tags;
+				return JSON.stringify(vars)
+			}							
+		</script>
 	</head>
 			
 	<body>
@@ -10,7 +43,7 @@
 			<form method="post" action="/accountbook/add_record_do">
 				{% csrf_token %}	
 				日期:<input type="date" name="occurrence_date"/><br/>
-				<select name="tag">	
+				<select>	
 					{% for tag in title_tags %}
 					<option value="{{tag.id}}">{{tag.name}}</option>
 					{% endfor %}
@@ -21,7 +54,7 @@
 				<input type="checkbox" name="tag" value="{{tag.id}}">{{tag.name}}</input>
 				{% endfor %}
 				<br/>
-				<input type="submit" value="save"/>
+				<button type="button" onclick="handleSaveBtnClick()">save</button>
 			</form>
 		</div>
 	</body>
