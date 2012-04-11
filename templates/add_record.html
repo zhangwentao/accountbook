@@ -10,10 +10,10 @@
 				var req = new XMLHttpRequest();
 				req.onreadystatechange = handleReqStateChanged;
 				req.open("post",url)
-				var data = new FormData();
+				var data = "";
 				var key = document.getElementsByName("csrfmiddlewaretoken")[0];
-				data.append("vars",collectVars());
-				data.append(key.name,key.value);
+				data+="csrfmiddlewaretoken="+key.value;
+                                data+="&vars="+collectVars();
 				req.send(data);
 				
 				function handleReqStateChanged()
