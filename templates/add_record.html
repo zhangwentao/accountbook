@@ -9,7 +9,7 @@
 			function handleSaveBtnClick()
 			{
 				var submitBtn = document.getElementById("submit");
-				submitBtn.textContent ="saving...";
+				submitBtn.value ="saving...";
 				submitBtn.disabled=true;
 				var req = new XMLHttpRequest();
 				req.onreadystatechange = handleReqStateChanged;
@@ -26,9 +26,6 @@
 					{
 						showResult(req.responseText);
 					}
-					
-					submitBtn.textContent ="save";
-					submitBtn.disabled=false;
 				}
 				
 				function showResult(resultString)
@@ -37,6 +34,8 @@
 					{
 						case 'success':
 							alert("data is saved");
+							submitBtn.value ="save";
+							submitBtn.disabled=false;
 						break;	
 					}	
 				}
@@ -80,7 +79,7 @@
 				<input type="checkbox" name="tag" value="{{tag.id}}">{{tag.name}}</input>
 				{% endfor %}
 				<br/>
-				<button type="button" id="submit" onclick="handleSaveBtnClick()">save</button>
+				<input type="button" id="submit" value="save" onclick="handleSaveBtnClick()"/>
 			</form>
 		</div>
 	</body>
