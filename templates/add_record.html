@@ -9,15 +9,21 @@
 			function handleSaveBtnClick()
 			{
 				var submitBtn = document.getElementById("submit");
-				submitBtn.value ="saving...";
-				submitBtn.disabled=true;
 				var req = new XMLHttpRequest();
 				req.onreadystatechange = handleReqStateChanged;
 				req.open("post",url)
 				var data = "";
 				var key = document.getElementsByName("csrfmiddlewaretoken")[0];
+				var vars = collectVars();
+				if(vars == null)
+				{
+					alert("input not validated!");
+					return;
+				}
 				data+="csrfmiddlewaretoken="+key.value;
-                                data+="&vars="+collectVars();
+                                data+="&vars="+vars;
+				submitBtn.value ="saving...";
+				submitBtn.disabled=true;
 				req.send(data);
 				
 				function handleReqStateChanged()
@@ -46,6 +52,10 @@
 				var vars = {};
 				vars["occurrence_date"] = document.getElementsByName("occurrence_date")[0].value;
 				vars["amount"] = document.getElementsByName("amount")[0].value;
+				if(!validate())
+				{
+					return;
+				}
 				var tags = [];
 				tags.push(document.getElementsByTagName("select")[0].value);
 				var checkboxes = document.getElementsByName("tag");
@@ -59,12 +69,28 @@
 				}		
 				vars["tag"] = tags;
 				return JSON.stringify(vars)
+
+				function validate()
+				{
+					return dateTest(vars["occurrence_date"]) && amountTest(vars["amount"])
+				}
+				function dateTest(str)
+				{
+					var reg = /^\d{4}\/\d{1,2}\/\d{1,2}$/g;	
+					return reg.test(str)	
+				}
+				function amountTest(str)
+				{
+					var reg = /\d*(\.)?\d*/g;
+					return reg.test(str)
+				}
 			}							
 		</script>
 	</head>
 			
 	<body>
-		<div style="width:320px;height:480px;border:dashed"> 
+		<!--<div style="width:320px;height:480px;border:dashed"> -->
+		<div> 
 			<form>
 				{% csrf_token %}	
 				日期:<input type="date" name="occurrence_date"/><br/>
