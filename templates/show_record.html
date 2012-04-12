@@ -14,14 +14,40 @@
 				req.onreadystatechange = handleReqStateChanged;
 				vars = "date="+queryDate.value
 				req.open("GET",queryUrl+"?"+vars);
-				alert(vars)
 				req.send()	
 				function handleReqStateChanged()
 				{
 					if(req.readyState == XMLHttpRequest.DONE)
 					{
-						alert(req.responseText);
+						genRows(req.responseText);
 					}
+				}
+				function genRows(result)
+				{
+					var r = JSON.parse(result);
+					var table = document.getElementById("record_table");
+				//	console.log(r)	
+					for(var i=0;i<r.length;i++)
+					{
+						var tr = document.createElement("tr");
+						var td = document.createElement("td");
+						td.textContent = i;
+						tr.appendChild(td);
+						td = document.createElement("td");
+						td.textContent = r[i].amount;
+						tr.appendChild(td);
+						var temp ="";
+						for (var j=0;j<r[i].tag_list.length;j++)
+						{
+							if(j)
+								temp+=',';	
+							temp+=r[i].tag_list[j]
+						}	
+						td = document.createElement("td");
+						td.textContent = temp;
+						tr.appendChild(td);
+						table.appendChild(tr);	
+					}	
 				}
 			}	
 		</script>
@@ -30,16 +56,11 @@
 	<body>
 		<div style="width:320px;height:480px;border:dashed;border-width:1px;">
 			日期:<input type="text" id="date"/><input type="button" id="query_btn" value="查询" onclick="handleQueryBtnClick()"/><br/>
-			<table border="1">
+			<table border="1" id="record_table">
 				<tr>
 					<th>序号</th>
 					<th>金额</th>
 					<th>类型</th>	
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>2.5</td>
-					<td>2012-2-1</td>
 				</tr>
 			</table>		
 		</div>
