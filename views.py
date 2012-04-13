@@ -25,9 +25,6 @@ def add_tag(request):
 	return HttpResponse("ok");
 
 def add_record(request):
-	f = file('/home/wentao/errorlog.txt','w')
-	f.write('ok')
-	f.close()
 	var = request.POST
 	data = simplejson.loads(var['vars'])
 	print data 
