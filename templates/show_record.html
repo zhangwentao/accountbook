@@ -26,7 +26,11 @@
 				{
 					var r = JSON.parse(result);
 					var table = document.getElementById("record_table");
-				//	console.log(r)	
+					for(var n=table.children.length-1;n>0;n--)
+					{
+						console.log(n)
+						table.deleteRow(n)
+					}
 					for(var i=0;i<r.length;i++)
 					{
 						var tr = document.createElement("tr");
@@ -49,6 +53,7 @@
 						table.appendChild(tr);	
 					}	
 				}
+					
 			}	
 		</script>
 	</head>

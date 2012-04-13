@@ -9,10 +9,10 @@
 		<div>
 			<form method="post" action="/accountbook/add_tag_do" id="add_tag">
 				{% csrf_token %}	
-				tag name:<input type="text" name="tag_name"/><br/>
-				<input type="radio" name="is_title" value='1'>is title</input>
-				<input type="radio" name="is_title" value='0' checked>is not title</input><br/>
-				description:<br/>
+				名字:<input type="text" name="tag_name"/><br/>
+				<input type="radio" name="is_title" value='1'>是项目</input>
+				<input type="radio" name="is_title" value='0' checked>不是项目</input><br/>
+				描述:<br/>
 				<textarea form="add_tag" rows="5" cols="40" name="tag_description"/></textarea>
 				<br/>
 				<input type="submit" value="save"/>
