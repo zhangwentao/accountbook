@@ -85,13 +85,21 @@
 					return reg.test(str)
 				}
 			}							
+			
+			function init(e)
+			{
+				document.getElementById("recordForm").reset();	
+				var currentDate = new Date();
+				var CDString = currentDate.getFullYear()+'/'+currentDate.getMonth()+"/"+currentDate.getDate();		
+				document.getElementsByName("occurrence_date")[0].value = CDString;
+			}
 		</script>
 	</head>
 			
-	<body>
-		<div style="width:320px;height:480px;border:dashed;border-width:1px;">
+	<body onload="init()">
+		<div tyle="width:320px;height:480px;border:dashed;border-width:1px;">
 		<!--<div> -->
-			<form>
+			<form id="recordForm">
 				{% csrf_token %}	
 				日期:<input type="date" name="occurrence_date"/><br/>
 				<select>	
@@ -106,6 +114,7 @@
 				{% endfor %}
 				<br/>
 				<input type="button" id="submit" value="save" onclick="handleSaveBtnClick()"/>
+				<input type="button" value="reset" onclick="init()"/>
 			</form>
 		</div>
 	</body>
