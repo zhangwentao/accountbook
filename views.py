@@ -33,6 +33,7 @@ def add_record(request):
 	new_record = Record()
 	new_record.amount = float(data['amount']) 	
 	new_record.occurrence_time = datetime(int(date[0]),int(date[1]),int(date[2]))
+	new_record.detail = data['detail']	
 	new_record.save()	
 	for tag_id in tags:
 		maping = Record_tag_maping()
