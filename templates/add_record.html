@@ -52,6 +52,7 @@
 				var vars = {};
 				vars["occurrence_date"] = document.getElementsByName("occurrence_date")[0].value;
 				vars["amount"] = document.getElementsByName("amount")[0].value;
+				vars["detail"] = document.getElementById("detail").value;
 				if(!validate())
 				{
 					return;
@@ -72,7 +73,7 @@
 
 				function validate()
 				{
-					return dateTest(vars["occurrence_date"]) && amountTest(vars["amount"])
+					return dateTest(vars["occurrence_date"]) && amountTest(vars["amount"]) && detailTest(vars["detail"]);
 				}
 				function dateTest(str)
 				{
@@ -81,8 +82,15 @@
 				}
 				function amountTest(str)
 				{
-					var reg = /\d+(\.)?\d*/g;
+					var reg = /^\d+(\.)?\d*/g;
 					return reg.test(str)
+				}
+				function detailTest(str)
+				{
+					if (str.length <= 100)
+						return true;
+					else
+						return false;
 				}
 			}							
 			
@@ -112,6 +120,8 @@
 				{% for tag in normal_tags %}
 				<input type="checkbox" name="tag" value="{{tag.id}}">{{tag.name}}</input>
 				{% endfor %}
+				<br/>
+				<textarea id ="detail" cols="25" rows="5"></textarea>
 				<br/>
 				<input type="button" id="submit" value="save" onclick="handleSaveBtnClick()"/>
 				<input type="button" value="reset" onclick="init()"/>
