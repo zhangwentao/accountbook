@@ -1,0 +1,32 @@
+body,
+html {
+	background: #ededed;
+}
+
+body {
+	padding: 5px;
+}
+
+/* input textarea */
+input,
+textarea {
+	outline: none;
+	border: 1px solid #929292;
+	border-radius: 3px;
+	font-family: sans-serif;
+}
+
+.bill-paper {
+	border: solid transparent 5px;
+	border-image:url(../img/bill-border.png) 5 0 round;
+	background-color: #fff;
+	padding: 30px 20px 30px;
+}
+
+.bill-title {
+	text-align: center;
+	margin: 10px 0;
+	font-weight: bold;
+	font-size: 20px; 
+	text-shadow: 0 0 4px #6d6d6d;
+}

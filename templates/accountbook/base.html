@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width user-scalable=no"/>
+		<link rel="stylesheet" href="/static/accountbook/base/css/reset.css"/>
+		<link rel="stylesheet" href="/static/accountbook/base/css/base.css"/>
+		{% block heads %}{% endblock %}
+	</head>
+	<body>
+		<div class="bill-paper">
+		{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>

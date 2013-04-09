@@ -1,0 +1,52 @@
+{% extends "accountbook/base.html" %}
+
+{% block title %}增加记录{% endblock %}
+
+{% block heads %} 
+	<link rel="stylesheet" href="/static/accountbook/add_record/css/add_record.css"/>
+{% endblock %}
+
+{% block content %}
+	<h2 class="bill-title">增加记录</h2>
+	<form id="record-form">
+		{% csrf_token %}	
+		<div>
+			<label class="item-title" for="record-date">日期</label>
+			<input type="date" id="record-date" name="date" required/>
+		</div>
+
+		<div>
+			<label class="item-title" for="record-type">类型</label>
+			<select id="record-type">	
+				{% for tag in title_tags %}
+				<option value="{{tag.id}}">{{tag.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div>
+			<label class="item-title" for="record-amount">金额</label>
+			<input type="number" id="record-amount" name="amount" step="0.1"/>元
+		</div>
+
+		<div class="tags">
+			<h3 class="item-title">标签</h3>
+			<ul>
+				{% for tag in normal_tags %}
+				<li>
+					<input type="checkbox" name="tag" id="tag-{{tag.id}}" value="{{tag.id}}"/><label for="tag-{{tag.id}}">{{tag.name}}</label>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		<div>
+			<label for="comment" class="item-title">备注</label>
+			<textarea id ="comment" class="comment"></textarea>
+		</div>
+
+		<input type="submit" value="保存"/>
+		<input type="reset" value="重置"/>
+	</form>
+	<script src="/static/accountbook/add_record/js/add_record.js"></script>
+{% endblock %}

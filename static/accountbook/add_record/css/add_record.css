@@ -1,0 +1,35 @@
+.tags {
+	margin-top: 10px;
+	line-height: 25px;
+}
+
+.tags li{
+	display: inline-block;
+}
+
+form div {
+	margin: 10px 0;
+}
+
+.comment {
+	display: block;
+	width: 100%;
+	min-height: 50px;
+}
+
+.item-title:after {
+	content: ":";
+}
+
+.tags label {
+	color: #fff;
+	font-size: 15px;
+	background-color: gray;
+	border: 1px solid gray;
+	border-radius: 3px;
+	margin-left: 4px;
+}
+
+input[type="button"] {
+	width: 40%;
+}

@@ -6,13 +6,14 @@ from models import Tag,Record,Record_tag_maping
 from datetime import datetime
 import simplejson
 from simplejson.encoder import JSONEncoder
+
 def add_tag_page(request):
 	return render_to_response('add_tag.html',{},context_instance=RequestContext(request))
 
 def add_record_page(request):
 	title_tags = Tag.objects.filter(is_title=True)
        	normal_tags = Tag.objects.filter(is_title = False) 			
-	return render_to_response('add_record.html',{'title_tags':title_tags,'normal_tags':normal_tags},context_instance=RequestContext(request))
+	return render_to_response('accountbook/add_record.html',{'title_tags':title_tags,'normal_tags':normal_tags},context_instance=RequestContext(request))
 
 def add_tag(request):
 	var = request.POST
@@ -43,7 +44,7 @@ def add_record(request):
 	return HttpResponse('success');
 
 def show_record_page(request):
-	return render_to_response("show_record.html")
+	return render_to_response("accountbook/show_record.html")
 
 def show_record(request):
 	date = request.GET['date'].split('/')
