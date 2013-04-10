@@ -27,14 +27,14 @@ def add_tag(request):
 
 def add_record(request):
 	var = request.POST
-	data = simplejson.loads(var['vars'])
+	data = simplejson.loads(var['data'])
 	print data 
-	date = data['occurrence_date'].split('/')
-	tags = data['tag']
+	date = data['date']
+	tags = data['tags']
 	new_record = Record()
 	new_record.amount = float(data['amount']) 	
-	new_record.occurrence_time = datetime(int(date[0]),int(date[1]),int(date[2]))
-	new_record.detail = data['detail']	
+	new_record.occurrence_time = datetime(int(date['year']),int(date['month']),int(date['day']))
+	new_record.detail = data['comment']	
 	new_record.save()	
 	for tag_id in tags:
 		maping = Record_tag_maping()
