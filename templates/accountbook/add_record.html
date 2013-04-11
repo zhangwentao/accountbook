@@ -4,6 +4,7 @@
 
 {% block heads %} 
 	<link rel="stylesheet" href="/static/accountbook/add_record/css/add_record.css"/>
+	<script src="/static/accountbook/add_record/js/add_record.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -45,8 +46,8 @@
 			<textarea id ="record-comment" class="comment"></textarea>
 		</div>
 
-		<input type="submit" id="submit-btn" value="保存"/>
-		<input type="reset" value="重新开始"/>
+		<div class="btn-container">
+			<input type="submit" id="submit-btn" value="保存"/>
+		</div>
 	</form>
-	<script src="/static/accountbook/add_record/js/add_record.js"></script>
 {% endblock %}

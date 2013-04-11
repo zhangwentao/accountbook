@@ -1,6 +1,4 @@
-window.onload = init;
-
-function init() {
+window.onload = function () {
 
 	var dateInput = document.getElementById("record-date");
 	var amountInput = document.getElementById("record-amount");
@@ -53,14 +51,17 @@ function init() {
 		req.onreadystatechange = function(evt) {
 			if(req.readyState == XMLHttpRequest.DONE)
 			{
-				submitBtn.value = "保存完成";
+				submitBtn.value = "保存";
+				submitBtn.disabled = false;
+				recordForm.reset();	
+				showTip("已保存");
+				setDefaultDate();
 			}
 		};
 		req.open("post",url)
-		vars+="csrfmiddlewaretoken="+key.value;
-		vars+="&data="+dataString;
+		vars+="csrfmiddlewaretoken="+key.value+"&data="+dataString;
 		req.send(vars);
-		submitBtn.value = "保存中...";
+		submitBtn.value = "正在保存";
 		submitBtn.disabled = true;
 	}
 
@@ -102,5 +103,4 @@ function init() {
 		data['comment'] = commentTxtArea.value;
 		return data;
 	}
-
 }

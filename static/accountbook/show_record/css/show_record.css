@@ -1,0 +1,47 @@
+.hide {
+	display: none;
+}
+
+.query-bar {
+	text-align: center;
+	padding-bottom: 10px;
+	border-bottom: 1px dashed;
+	margin-bottom: 20px;
+}
+
+.hint-bar {
+	border: 1px solid #494949;
+	background-color: #b6b6b6;
+	color: #ffffff;
+	text-align: center;
+	margin: 5px 0;
+}
+
+.query-result {
+	margin: 5px 0;
+}
+
+.record-table {
+	width: 100%;
+}
+
+.record-table caption {
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.record-table td {
+	border: 1px solid ;
+	text-align: center;
+}
+
+.record-table th {
+	border: 1px solid ;
+	text-align: center;
+	font-weight: bold;
+	background-color: #b6b6b6;
+}
+
+.record-table col {
+	width: 4em;
+}

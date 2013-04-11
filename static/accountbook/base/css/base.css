@@ -4,7 +4,7 @@ html {
 }
 
 body {
-	padding: 5px;
+	padding: 10px 5px;
 }
 
 /* input textarea */
@@ -21,6 +21,7 @@ textarea {
 	border-image:url(../img/bill-border.png) 5 0 round;
 	background-color: #fff;
 	padding: 30px 20px 30px;
+	min-height: 300px;
 }
 
 .bill-title {
@@ -29,4 +30,8 @@ textarea {
 	font-weight: bold;
 	font-size: 20px; 
 	text-shadow: 0 0 4px #6d6d6d;
+}
+
+.item-title:after {
+	content: ":";
 }

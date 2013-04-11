@@ -1,83 +1,34 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>显示记录</title>
-		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width,initial-scale=1.0 user-scalable=no"/>
-		<script type="text/javascript">
-			var queryUrl = "/accountbook/show_record_do"
-			function handleQueryBtnClick()
-			{
-				var vars='';
-				var queryDate = document.getElementById("date");
-				var req = new XMLHttpRequest()
-				req.onreadystatechange = handleReqStateChanged;
-				vars = "date="+queryDate.value
-				req.open("GET",queryUrl+"?"+vars);
-				req.send()	
-				function handleReqStateChanged()
-				{
-					if(req.readyState == XMLHttpRequest.DONE)
-					{
-						genRows(req.responseText);
-					}
-				}
-				function genRows(result)
-				{
-					var r = JSON.parse(result);
-					var table = document.getElementById("record_table");
-					var sum=0;
-					for(var n=table.children.length-1;n>0;n--)
-					{
-						console.log(n)
-						table.deleteRow(n)
-					}
-					for(var i=0;i<r.length;i++)
-					{
-						var tr = document.createElement("tr");
-						var td = document.createElement("td");
-						td.textContent = i;
-						tr.appendChild(td);
-						td = document.createElement("td");
-						td.textContent = r[i].amount;
-						sum += Number(r[i].amount);
-						tr.appendChild(td);
-						var temp ="";
-						for (var j=0;j<r[i].tag_list.length;j++)
-						{
-							if(j)
-								temp+=',';	
-							temp+=r[i].tag_list[j]
-						}	
-						td = document.createElement("td");
-						td.textContent = temp;
-						tr.appendChild(td);
-						table.appendChild(tr);	
-					}	
-					var tr = document.createElement("tr");
-					var td = document.createElement("td");
-					td.textContent = "总计";
-					tr.appendChild(td);
-					td = document.createElement("td");
-					td.textContent = String(sum);
-					tr.appendChild(td);
-					table.appendChild(tr)
-				}
-					
-			}	
-		</script>
-	</head>
-			
-	<body>
-		<div style="width:320px;height:480px;border:dashed;border-width:1px;">
-			日期:<input type="text" id="date"/><input type="button" id="query_btn" value="查询" onclick="handleQueryBtnClick()"/><br/>
-			<table border="1" id="record_table">
+{% extends "accountbook/base.html" %}
+
+{% block title %}记录查询{% endblock %}
+
+{% block heads %}
+<link rel="stylesheet" href="/static/accountbook/show_record/css/show_record.css"/>
+{% endblock %}
+
+{% block content %}	
+	<h2 class="bill-title">记录查询</h2>
+	<section class="query-bar">
+		<label for="query-date" class="item-title">日期</label>
+		<input type="date" id="query-date"/>
+	</section>
+	<section id="hint" class="hint-bar hide"></section>
+	<section class="query-result">
+		<table id="record-table" class="hide record-table">
+			<caption id="table-caption"></caption>
+			<colgroup>
+				<col span="1"/>
+			</colgroup>
+			<thead>
 				<tr>
 					<th>序号</th>
 					<th>金额</th>
 					<th>类型</th>	
 				</tr>
-			</table>		
-		</div>
-	</body>
-</html>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>		
+	</section>
+	<script src="/static/accountbook/show_record/js/show_record.js"></script>
+{% endblock %}

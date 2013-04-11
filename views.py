@@ -28,7 +28,6 @@ def add_tag(request):
 def add_record(request):
 	var = request.POST
 	data = simplejson.loads(var['data'])
-	print data 
 	date = data['date']
 	tags = data['tags']
 	new_record = Record()
@@ -46,10 +45,8 @@ def add_record(request):
 def show_record_page(request):
 	return render_to_response("accountbook/show_record.html")
 
-def show_record(request):
-	date = request.GET['date'].split('/')
-	records = Record.objects.filter(occurrence_time = datetime(int(date[0]),int(date[1]),int(date[2])))
-	record = records[0]
+def record(request,year,month,day):
+	records = Record.objects.filter(occurrence_time = datetime(int(year),int(month),int(day)))
 	resultList = []
 	for record in records:
 		temp = {}
@@ -60,7 +57,6 @@ def show_record(request):
 			tag = Tag.objects.get(id = maping.tag_id)	
 			typename_list.append(tag.name) 
 		temp["tag_list"] = typename_list
-		print typename_list	
 		resultList.append(temp)
 	encoder = JSONEncoder()
 	result = encoder.encode(resultList)			
