@@ -21,27 +21,39 @@
 	margin: 5px 0;
 }
 
-.record-table {
+.record {
 	width: 100%;
 }
 
-.record-table caption {
+.record caption {
 	text-align: center;
 	margin-bottom: 5px;
 }
 
-.record-table td {
+.record td {
 	border: 1px solid ;
 	text-align: center;
 }
 
-.record-table th {
+.record th {
 	border: 1px solid ;
 	text-align: center;
 	font-weight: bold;
 	background-color: #b6b6b6;
 }
 
-.record-table col {
+.record col {
 	width: 4em;
+}
+
+.reload-btn {
+	background: url(../img/reload.png) no-repeat;
+	width: 24px;
+	height: 24px;
+	border: none;
+	vertical-align: top;
+}
+
+.date-input {
+	width: 130px;
 }

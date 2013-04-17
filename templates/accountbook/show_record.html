@@ -3,18 +3,20 @@
 {% block title %}记录查询{% endblock %}
 
 {% block heads %}
-<link rel="stylesheet" href="/static/accountbook/show_record/css/show_record.css"/>
+	<link rel="stylesheet" href="/static/accountbook/show-record/css/show-record.css"/>
+	<script src="/static/accountbook/show-record/js/show-record.js"></script>
 {% endblock %}
 
 {% block content %}	
 	<h2 class="bill-title">记录查询</h2>
 	<section class="query-bar">
 		<label for="query-date" class="item-title">日期</label>
-		<input type="date" id="query-date"/>
+		<input type="date" id="query-date" class="date-input"/>
+		<input type="button" id="refresh-btn" class="reload-btn"/>
 	</section>
 	<section id="hint" class="hint-bar hide"></section>
 	<section class="query-result">
-		<table id="record-table" class="hide record-table">
+		<table id="record-table" class="hide record">
 			<caption id="table-caption"></caption>
 			<colgroup>
 				<col span="1"/>
@@ -28,7 +30,6 @@
 			</thead>
 			<tbody>
 			</tbody>
-		</table>		
+		</table>
 	</section>
-	<script src="/static/accountbook/show_record/js/show_record.js"></script>
 {% endblock %}
