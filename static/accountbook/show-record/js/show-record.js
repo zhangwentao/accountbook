@@ -161,10 +161,12 @@ window.onload = function() {
 		dialog.setHtml(resultHtml);
 		var delRecordBtn = document.getElementById('del-record-btn');
 		delRecordBtn.onclick = function() {
-			delRecordById(dataObj['id'],function(){
-				var tbody = recordTable.getElementsByTagName('tbody')[0];	
-				tbody.removeChild(tr);
-			});
+			if (confirm("确定要删除吗？")){
+				delRecordById(dataObj['id'],function(){
+					var tbody = recordTable.getElementsByTagName('tbody')[0];	
+					tbody.removeChild(tr);
+				});
+			}
 		};
 		dialog.show();
 	}
