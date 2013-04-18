@@ -5,6 +5,7 @@ window.onload = function() {
 	var refreshBtn = document.getElementById("refresh-btn");
 	var recordTable = document.getElementById("record-table");	
 	var recordCaption = document.getElementById("table-caption"); 
+	var win = document.getElementById("prompt-window");
 	var resultDateText = "";
 
 	var hint = {
@@ -22,6 +23,27 @@ window.onload = function() {
 		setAll: function (isShow, msgString) {
 			this.display(isShow);
 			this.setMsg(msgString);
+		}
+	};
+
+	var dialog = {
+		dialogElt: document.getElementById("prompt-window"),
+		show: function() {
+			this.dialogElt.style.display = "block";
+			document.body.onclick = this.handleClick;
+		},
+		hide: function() {
+			this.dialogElt.style.display = "none";
+			document.body.onclick = null;
+		},
+		setHtml: function(htmlText) {
+			this.dialogElt.innerHTML = htmlText;
+		},
+		handleClick: function(evt) {
+			if (evt.target != win) {
+				console.log(evt);
+				dialog.hide();
+			}
 		}
 	};
 
@@ -69,7 +91,7 @@ window.onload = function() {
 	function sendData(data) {
 		recordTable.classList.add("hide");
 		hint.setAll(true, "正在查询...");
-		var url = "/accountbook/record/"
+		var url = "/accountbook/records/"
 		var req = new XMLHttpRequest();
 		var date = data['date'];
 		req.onreadystatechange = function(evt) {
@@ -84,7 +106,8 @@ window.onload = function() {
 		queryDateInput.disabled = true;
 	}
 
-	function renderTable(data) {
+	function renderTable(result) {
+		var data = result['data'];
 		var tbody = document.createElement("tbody");	
 		var total = 0;
 		if ( data.length == 0 ) {
@@ -95,6 +118,7 @@ window.onload = function() {
 			for( var i = 0; i < data.length; i++ ) {
 				var curData = data[i];
 				var tr = document.createElement("tr");
+				tr.recordData = curData;
 				var numTd = document.createElement("td");
 				numTd.textContent = i+1; 
 				var amountTd = document.createElement("td");
@@ -105,6 +129,10 @@ window.onload = function() {
 				tr.appendChild(numTd);
 				tr.appendChild(amountTd);
 				tr.appendChild(tagTd);
+				tr.onclick = function(evt){
+					evt.stopPropagation();	
+					showRecordDetail(this);
+				};
 				tbody.appendChild(tr);
 			}
 			var tr = document.createElement("tr");
@@ -119,5 +147,41 @@ window.onload = function() {
 			recordTable.appendChild(tbody);
 			recordTable.classList.remove("hide");
 		}
+	}
+
+	function showRecordDetail(tr) {
+		var dataObj = tr.recordData;
+		var resultHtml =	'<h3>账单详情</h3>' +
+							'<ul>' +
+								'<li>金额: ' + dataObj['amount'] + '<li>' +
+								'<li>标签: ' + dataObj['tag_list'] + '<li>' + 
+								'<li>备注:' + dataObj['detail'] + '<li>' + 
+							'</ul>' +
+							'<p><a href="###" id="del-record-btn">删除这个条记录</a></p>';
+		dialog.setHtml(resultHtml);
+		var delRecordBtn = document.getElementById('del-record-btn');
+		delRecordBtn.onclick = function() {
+			delRecordById(dataObj['id'],function(){
+				var tbody = recordTable.getElementsByTagName('tbody')[0];	
+				tbody.removeChild(tr);
+			});
+		};
+		dialog.show();
+	}
+
+	function delRecordById(recordId,callback) {
+		var urlPrefix = '/accountbook/records/';
+		var req = new XMLHttpRequest();
+		req.open('DELETE',urlPrefix+recordId);
+		req.onreadystatechange = function(evt) {
+			if(req.readyState == XMLHttpRequest.DONE) {
+				var data = JSON.parse(req.responseText);
+				if(data['code'] == 0) {
+					callback();
+					dialog.hide();
+				}	
+			}
+		};
+		req.send();
 	}
 }

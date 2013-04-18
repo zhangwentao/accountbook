@@ -42,6 +42,10 @@
 	background-color: #b6b6b6;
 }
 
+.record tr:hover {
+	background-color: #cbd9eb;
+}
+
 .record col {
 	width: 4em;
 }
@@ -56,4 +60,11 @@
 
 .date-input {
 	width: 130px;
+}
+
+.dialog-window {
+	top: 205px;
+	left: 5px;
+	right: 5px;
+	box-shadow: 2px 2px 8px #aaa;
 }

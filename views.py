@@ -43,7 +43,8 @@ def add_record(request):
 		maping.record_id = new_record.id
 		maping.tag_id = int(tag_id)
 		maping.save()
-	return HttpResponse('success');
+	result = ReturnedData().to_json_string()
+	return HttpResponse(result);
 
 def show_record_page(request):
 	if request.user.is_authenticated():
@@ -51,13 +52,37 @@ def show_record_page(request):
 	else:
 		return HttpResponseRedirect('/admin')
 
+def record(request, record_id):
+	record_id = int(record_id)
+	cur_record = Record.objects.get(id=record_id)
 
-def record(request,year,month,day):
+	if request.method == 'DELETE':
+		cur_record.delete()
+		tmp_data = {'recordId':record_id}
+	elif request.method == 'GET':
+		temp = {}
+		temp["amount"] = cur_record.amount		
+		temp["id"] = cur_record.id
+		temp["detail"] = record.detail
+		maping_list = Record_tag_maping.objects.filter(record_id=cur_record.id)
+		typename_list=[]
+		for maping in maping_list:
+			tag = Tag.objects.get(id = maping.tag_id)	
+			typename_list.append(tag.name) 
+		temp["tag_list"] = typename_list
+		tmp_data = temp
+	
+	result = ReturnedData(data=tmp_data).to_json_string()
+	return HttpResponse(result);
+
+def get_records_of_day(request,year,month,day):
 	records = Record.objects.filter(occurrence_time = datetime(int(year),int(month),int(day)))
 	resultList = []
 	for record in records:
 		temp = {}
 		temp["amount"] = record.amount		
+		temp["id"] = record.id
+		temp["detail"] = record.detail
 		maping_list = Record_tag_maping.objects.filter(record_id=record.id)
 		typename_list=[]
 		for maping in maping_list:
@@ -65,6 +90,15 @@ def record(request,year,month,day):
 			typename_list.append(tag.name) 
 		temp["tag_list"] = typename_list
 		resultList.append(temp)
-	encoder = JSONEncoder()
-	result = encoder.encode(resultList)			
+	result = ReturnedData(data=resultList).to_json_string()			
 	return HttpResponse(result);
+
+class ReturnedData:
+	def __init__(self,code=0,data={},msg=''):
+		self.data_dict = {}
+		tmp = self.data_dict
+		tmp['code'] = code
+		tmp['data'] = data
+		tmp['msg'] = msg
+	def to_json_string(self):
+		return JSONEncoder().encode(self.data_dict)

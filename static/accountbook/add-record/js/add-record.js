@@ -44,7 +44,7 @@ window.onload = function () {
 	function sendData(data) {
 		var submitBtn = document.getElementById("submit-btn");
 		var key = document.getElementsByName("csrfmiddlewaretoken")[0];
-		var url = "/accountbook/add_record_do";
+		var url = "/accountbook/records/";
 		var req = new XMLHttpRequest();
 		var dataString = JSON.stringify(data);
 		var vars = '';
