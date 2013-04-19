@@ -75,6 +75,33 @@ def record(request, record_id):
 	result = ReturnedData(data=tmp_data).to_json_string()
 	return HttpResponse(result);
 
+def records(request):
+	if request.method == 'POST':
+		return add_record(request)
+	elif request.method == 'GET':
+		params = request.GET
+		start_date_list = params['startdate'].split('-')
+		end_date_list = params['enddate'].split('-')
+		start_date = datetime(int(start_date_list[0]),int(start_date_list[1]),int(start_date_list[2]))
+		end_date = datetime(int(end_date_list[0]),int(end_date_list[1]),int(end_date_list[2]))
+		record_list = Record.objects.filter(occurrence_time__range=(start_date,end_date))
+		resultList = []
+		for record in record_list:
+			temp = {}
+			temp["amount"] = record.amount		
+			temp["id"] = record.id
+			temp["detail"] = record.detail
+			maping_list = Record_tag_maping.objects.filter(record_id=record.id)
+			typename_list=[]
+			for maping in maping_list:
+				tag = Tag.objects.get(id = maping.tag_id)	
+				typename_list.append(tag.name) 
+			temp["tag_list"] = typename_list
+			resultList.append(temp)
+		result = ReturnedData(data=resultList).to_json_string()			
+		return HttpResponse(result);
+	return HttpResponse();
+
 def get_records_of_day(request,year,month,day):
 	records = Record.objects.filter(occurrence_time = datetime(int(year),int(month),int(day)))
 	resultList = []
