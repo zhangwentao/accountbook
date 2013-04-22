@@ -1,11 +1,3 @@
-.tags {
-	margin-top: 10px;
-	line-height: 25px;
-}
-
-.tags li{
-	display: inline-block;
-}
 
 form div {
 	margin: 10px 0;
@@ -15,15 +7,6 @@ form div {
 	display: block;
 	width: 100%;
 	min-height: 50px;
-}
-
-.tags label {
-	color: #fff;
-	font-size: 15px;
-	background-color: gray;
-	border: 1px solid gray;
-	border-radius: 3px;
-	margin-left: 4px;
 }
 
 input[type="submit"] {

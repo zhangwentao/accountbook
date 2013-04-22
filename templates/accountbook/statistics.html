@@ -1,0 +1,46 @@
+{% extends "accountbook/base.html" %}
+
+{% block title %}数据统计{% endblock %} 
+
+{% block heads %}
+	<link rel="stylesheet" href="/static/accountbook/statistics/css/statistics.css"/>
+	<script>
+		var tags = {{tagsObj|safe}};
+	</script>
+{% endblock %}
+
+{% block content %}
+	<section class="query-bar">
+		<div>
+			<label for="start-time">开始日期</label><input type="date" id="start-date"/>
+		</div>
+		<div>
+			<label for="end-time">结束日期</label><input type="date" id="end-date"/>
+		</div>
+		<input type="button" value="查询" id="query-button"/>
+	</section >
+	<section class="tags">
+		<h3 class="item-title">标签筛选</h3>
+		<ul>
+			{% for tag in normal_tags %}
+			<li>
+				<input type="checkbox" name="tag" id="tag-{{tag.id}}" value="{{tag.id}}"/><label for="tag-{{tag.id}}">{{tag.name}}</label>
+			</li>
+			{% endfor %}
+		</ul>
+	</section>
+	<section>
+		<h3>统计</h3>
+		<table id="statistics-table">
+			<thead>
+				<tr>
+					<th>标签</th>
+					<th>总计</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</section>
+	<script src="/static/accountbook/statistics/js/statistics.js"></script>
+{% endblock %}

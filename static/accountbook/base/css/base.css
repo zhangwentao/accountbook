@@ -35,3 +35,21 @@ textarea {
 .item-title:after {
 	content: ":";
 }
+
+.tags {
+	margin-top: 10px;
+	line-height: 25px;
+}
+
+.tags li{
+	display: inline-block;
+}
+
+.tags label {
+	color: #fff;
+	font-size: 15px;
+	background-color: gray;
+	border: 1px solid gray;
+	border-radius: 3px;
+	margin-left: 4px;
+}

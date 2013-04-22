@@ -28,6 +28,16 @@ def add_tag(request):
 	new_tag.save()
 	return HttpResponse("ok");
 
+def tags(request):
+	if request.method == 'GET':
+		tag_list = Tag.objects.all()
+		tag_obj_list = []
+		for tag in tag_list:
+			tmp_dict = {'id':tag.id,'name':tag.name,'description':tag.description}
+			tag_obj_list.append(tmp_dict)
+		result = ReturnedData(data=tag_obj_list).to_json_string()
+		return HttpResponse(result);
+
 def add_record(request):
 	var = request.POST
 	data = simplejson.loads(var['data'])
@@ -51,6 +61,15 @@ def show_record_page(request):
 		return render_to_response("accountbook/show_record.html")
 	else:
 		return HttpResponseRedirect('/admin')
+
+def statistics_page(request):
+	normal_tags = Tag.objects.filter(is_title = False)
+	tag_list = Tag.objects.all()
+	tag_obj = {}
+	for tag in tag_list:
+		tag_obj[tag.id] = tag.name;
+	tag_obj = JSONEncoder().encode(tag_obj)
+	return render_to_response('accountbook/statistics.html',{'tagsObj':tag_obj,'normal_tags':normal_tags},context_instance=RequestContext(request))
 
 def record(request, record_id):
 	record_id = int(record_id)
@@ -95,7 +114,7 @@ def records(request):
 			typename_list=[]
 			for maping in maping_list:
 				tag = Tag.objects.get(id = maping.tag_id)	
-				typename_list.append(tag.name) 
+				typename_list.append(tag.id) 
 			temp["tag_list"] = typename_list
 			resultList.append(temp)
 		result = ReturnedData(data=resultList).to_json_string()			
