@@ -54,6 +54,7 @@ function compute() {
 		tmpObj['amount'] = sumByTag(curTagId);
 		resultArr.push(tmpObj);
 	}
+	console.log(resultArr);
 	return resultArr;
 }
 
@@ -101,9 +102,10 @@ function rend(dataArr) {
 
 function sumByTag(tagId) {
 	var result = 0;	
+	var record;
 	for (var i = 0; i < recordArr.length; i++) {
-		var record = recordArr[i];
-		if(record.tag_list.indexOf(tagId)) {
+		record = recordArr[i];
+		if((record.tag_list.indexOf(tagId))>=0) {
 			result += record.amount;
 		}
 	}
